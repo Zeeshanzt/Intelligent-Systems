@@ -10,16 +10,17 @@ This is a Django-based web application that provides users with a dashboard to v
 
 ## Setup
 * Clone the repository
-git clone https://github.com/Zeeshanzt/inventory-management.git
+```https://github.com/Zeeshanzt/Intelligent-Systems.git```
 
 * Navigate to the project directory
-cd inventory-management
+```cd Intelligent-Systems```
 * Install the dependencies
-pip install -r requirements.txt
+```pip install -r requirements.txt```
+* Create your own sql database in settings.py
 * Run the migrations
-python manage.py migrate
+```python manage.py migrate```
 * Start the development server
-python manage.py runserver
+```python manage.py runserver```
 ## Usage
 * Open a web browser and navigate to http://localhost:8000/
 * Login using your username and password
