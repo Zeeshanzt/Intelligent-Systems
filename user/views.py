@@ -2,6 +2,9 @@ from django.shortcuts import redirect, render
 from django.contrib.auth.forms import UserCreationForm
 from .forms import CreateUserForm,UserUpdateForm,ProfileUpdateForm
 from django.contrib import messages
+#import product models
+from dashboard.models import Product, Order
+from .models import User
 
 # Create your views here.
 def register(request):
@@ -21,7 +24,24 @@ def register(request):
     return render(request, 'user/register.html', context)
 
 def profile(request):
-    return render(request, 'user/profile.html')
+    order_count = Order.objects.count()
+    product_count = Product.objects.count()
+    staff_count = User.objects.count()
+    products = Product.objects.all()
+    total_stock_quantity = 0
+    for product in products:
+            total_stock_quantity += product.quantity
+    formatted_order_count = '{:,}'.format(order_count)
+    formatted_product_count = '{:,}'.format(product_count)
+    formatted_staff_count = '{:,}'.format(staff_count)
+    total_stock_quantity = '{:,}'.format(total_stock_quantity)
+    context = {
+        'formatted_order_count': formatted_order_count,
+        'formatted_product_count': formatted_product_count,
+        'formatted_staff_count': formatted_staff_count,
+        'total_stock_quantity': total_stock_quantity,
+    }
+    return render(request, 'user/profile.html',context)
 
 def profile_update(request):
     if request.method == 'POST':

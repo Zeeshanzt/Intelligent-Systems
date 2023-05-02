@@ -4,54 +4,29 @@
 {% load crispy_forms_tags %}
 {% block content %}
 <link rel="stylesheet" href="{% static 'style.css' %}" />
-<div class="container">
-    <div class="row my-4">
-        <div class="col-md-4">
-
+<section class="main">
+    <div class="profile-card">
+      <div class="image">
+        <img src= {{user.profile.image.url}} alt="Profile Picture" class="profile-pic">
+      </div>
+      <div class="data">
+        <h2>{{user.username}}</h2>
+        <span>{{user.email}}</span>
+      </div>
+      <div class="row">
+        <div class="info">
+          <h3>Phone</h3>
+          <span>{{user.profile.phone}}</span>
         </div>
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header bg-info text-white">
-                    Profile Page
-                </div>
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-8">
-                            <span class="h4"> Profile Information</span> <a class="btn btn-info btn-sm float-right"
-                                href="{% url 'user-profile-update' %}">Edit</a>
-                            <hr>
-                            <table class="table bg-white table-borderless">
-                                <tbody>
-                                    <tr>
-                                        <th scope="row">Name</th>
-                                        <td>{{user.username}}</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">Email</th>
-                                        <td>{{user.email}}</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">Phone</th>
-                                        <td>{{user.profile.phone}}</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">Address</th>
-                                        <td>{{user.profile.address}}</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-
-                        </div>
-                        <div class="col-md-4">
-                            <img class="img-thumbnail" src= {{user.profile.image.url}} alt="Profile Picture">
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div class="info">
+          <h3>Address</h3>
+          <span>{{user.profile.address}}</span>
         </div>
-
+      </div>
+      <div class="buttons">
+        <a href="{% url 'dashboard-home' %}" class="btn"> Go To Dashboard</a>
+      </div>
     </div>
-
-</div>
+  </section>
 
 {% endblock %}

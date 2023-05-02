@@ -2,25 +2,29 @@
 {% block title %} Edit Product {% endblock title %}
 {% load crispy_forms_tags %}
 {% block content %}
-
-<div class="container">
-    <div class="row mt-5">
-        <div class="col-md-6 offset-md-3">
-            <div class="border bg-white p-3">
-                <h3>Edit Item</h3>
-                <hr/>
+<div class="form-product">
+<div class="container-product">
+    <div class="forms">
+        <div class="form login">
+            <span class="title">Edit Item</span>
+            <form method = "POST">
+                {% csrf_token %}
+                {{update_form|crispy}}
+                <div class="buttons">
+                    <a href=" {% url 'dashboard-product' %}">Cancel</a>
+                    <input type="submit" value= 'Confirm'>
+                </div>
                 
-                <form method = "POST">
-                    {% csrf_token %}
-                    {{update_form|crispy}}
-                    <a class = 'btn btn-secondary' href=" {% url 'dashboard-product' %}">Cancel</a>
-                    <input class = "btn btn-info" type="submit" value= 'Confirm'>
-                </form>
-            </div>
-           
+            </form>
+    
 
-        </div>
-    </div>
+
 </div>
+</div>
+
+
+
+
+
 
 {% endblock %}

@@ -1,34 +1,613 @@
 {% load static %}
-
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>{% block title %}{% endblock title %} | Inventory App</title>
+<link rel="stylesheet" href="{% static 'style.css' %}" />
     <!--Custome CSS-->
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8">
+    <title>{% block title %}{% endblock title %} | StockCopter</title>
     <link rel="stylesheet" href="{% static 'style.css' %}" />
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD"
-      crossorigin="anonymous"
-    />
 
-    <!--Chartjs CDN-->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
+    <!-- Boxicons CDN Link -->
+    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css'
+      rel='stylesheet'>
+      
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
   </head>
+
   <body>
-    {% include 'partials/nav.html' %} {% block content %}{% endblock content %}
-    <script
+    {% include 'partials/sidebar.html' %}
+  <section class="home-section">
+    {% if user.is_authenticated and user.is_staff and user.is_superuser %}
+    <nav>
+      <div class="sidebar-button">
+        <i class='bx bx-menu sidebarBtn'></i>
+        <span class="dashboard">
+          {% block dashboard-title %} {% endblock dashboard-title %}
+        </span>
+      </div>
+      <form action="{% url 'dashboard-search-results' %}" method = "POST">
+        {% csrf_token %}
+        <div class="search-box">
+          <input type="text" placeholder="Search Products..." name = "searched">
+          <button type = "submit"><i class='bx bx-search'></i></button>
+        </div>
+      </form>
+      
+      <div class="button-process">
+        <div class="content">
+          <a href="{% url 'dashboard-process-images'%}">
+          <i class="bx bx-cloud-download"></i>
+          <span class="button-process-text">Process </span></a>
+        </div>
+      </div>
+      <div class="profile-details">
+        <img  src= {{user.profile.image.url}} alt="Profile Picture">
+        <span class="admin_name">{{user.username}}</span>
+      
+        <a href="{% url 'user-profile' %}"><i class='bx bx-chevron-down' > </i></a>
+     
+      </div>
+    </nav>
+    {% endif %}
+    <div class="home-content">
+    {% include 'partials/nav.html' %} 
+    
+    {% block content %}{% endblock content %}
+    </div>
+  </section>
+  
+  <script src="{% static 'script.js' %}" type="text/javascript"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
+  <script
       src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
       integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
       crossorigin="anonymous"
     ></script>
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"
-      integrity="sha384-mQ93GR66B00ZXjt0YO5KlohRA5SY2XofN4zfuZxLkoj1gXtW8ANNCe9d5Y3eG5eD"
-      crossorigin="anonymous"
-    ></script>
-  </body>
+    <!--Pie Chart for Orders per Staff-->
+    <script>
+      var ctx = document.getElementById('Order_Chart').getContext('2d');
+      var Order_Chart = new Chart(ctx, {
+          type: 'doughnut',
+          data: {
+              labels: [{% for order in orderer_labels %} '{{order}}',{% endfor %}],
+              datasets: [{
+                  label: 'Orders',
+                  data: [{% for order in orderer_quantities %} {{order}},{% endfor %}],
+                  backgroundColor: [
+                  'rgba(255, 99, 132, 1)',
+                  'rgba(54, 162, 235, 1)',
+                  'rgba(255, 206, 86, 1)',
+                  'rgba(75, 192, 192, 1)',
+                  'rgba(153, 102, 255, 1)',
+                  'rgba(255, 159, 64, 1)',
+                  'rgba(255, 99, 132, 0.5)',
+                  'rgba(54, 162, 235, 0.5)',
+                  'rgba(255, 206, 86, 0.5)',
+                  'rgba(75, 192, 192, 0.5)',
+                  'rgba(153, 102, 255, 0.5)',
+                  'rgba(255, 159, 64, 0.5)',
+                  'rgba(255, 99, 132, 0.75)',
+                  'rgba(54, 162, 235, 0.75)',
+                  'rgba(255, 206, 86, 0.75)',
+                  'rgba(75, 192, 192, 0.75)',
+                  'rgba(153, 102, 255, 0.75)',
+                  'rgba(255, 159, 64, 0.75)',
+                  'rgba(255, 99, 132, 0.25)',
+                  'rgba(54, 162, 235, 0.25)',
+                  'rgba(255, 206, 86, 0.25)',
+                  'rgba(75, 192, 192, 0.25)',
+                  'rgba(153, 102, 255, 0.25)',
+                  'rgba(255, 159, 64, 0.25)',
+                  'rgba(255, 99, 132, 0.9)',
+                  'rgba(54, 162, 235, 0.9)',
+                  'rgba(255, 206, 86, 0.9)',
+                  'rgba(75, 192, 192, 0.9)',
+                  'rgba(153, 102, 255, 0.9)',
+                  'rgba(255, 159, 64, 0.9)',
+                  'rgba(255, 99, 132, 0.1)',
+                  'rgba(54, 162, 235, 0.1)',
+                  'rgba(255, 206, 86, 0.1)',
+                  'rgba(75, 192, 192, 0.1)',
+                  'rgba(153, 102, 255, 0.1)',
+                  'rgba(255, 159, 64, 0.1)',
+                  'rgba(255, 99, 132, 0.8)',
+                  'rgba(54, 162, 235, 0.8)',
+                  'rgba(255, 206, 86, 0.8)',
+                  'rgba(75, 192, 192, 0.8)',
+                  'rgba(153, 102, 255, 0.8)',
+                  'rgba(255, 159, 64, 0.8)',
+                  'rgba(255, 99, 132, 0.3)',
+                  'rgba(54, 162, 235, 0.3)',
+                  ],
+                  borderColor: [
+                  'rgba(255, 99, 132, 1)',
+                  'rgba(54, 162, 235, 1)',
+                  'rgba(255, 206, 86, 1)',
+                  'rgba(75, 192, 192, 1)',
+                  'rgba(153, 102, 255, 1)',
+                  'rgba(255, 159, 64, 1)',
+                  'rgba(255, 99, 132, 0.5)',
+                  'rgba(54, 162, 235, 0.5)',
+                  'rgba(255, 206, 86, 0.5)',
+                  'rgba(75, 192, 192, 0.5)',
+                  'rgba(153, 102, 255, 0.5)',
+                  'rgba(255, 159, 64, 0.5)',
+                  'rgba(255, 99, 132, 0.75)',
+                  'rgba(54, 162, 235, 0.75)',
+                  'rgba(255, 206, 86, 0.75)',
+                  'rgba(75, 192, 192, 0.75)',
+                  'rgba(153, 102, 255, 0.75)',
+                  'rgba(255, 159, 64, 0.75)',
+                  'rgba(255, 99, 132, 0.25)',
+                  'rgba(54, 162, 235, 0.25)',
+                  'rgba(255, 206, 86, 0.25)',
+                  'rgba(75, 192, 192, 0.25)',
+                  'rgba(153, 102, 255, 0.25)',
+                  'rgba(255, 159, 64, 0.25)',
+                  'rgba(255, 99, 132, 0.9)',
+                  'rgba(54, 162, 235, 0.9)',
+                  'rgba(255, 206, 86, 0.9)',
+                  'rgba(75, 192, 192, 0.9)',
+                  'rgba(153, 102, 255, 0.9)',
+                  'rgba(255, 159, 64, 0.9)',
+                  'rgba(255, 99, 132, 0.1)',
+                  'rgba(54, 162, 235, 0.1)',
+                  'rgba(255, 206, 86, 0.1)',
+                  'rgba(75, 192, 192, 0.1)',
+                  'rgba(153, 102, 255, 0.1)',
+                  'rgba(255, 159, 64, 0.1)',
+                  'rgba(255, 99, 132, 0.8)',
+                  'rgba(54, 162, 235, 0.8)',
+                  'rgba(255, 206, 86, 0.8)',
+                  'rgba(75, 192, 192, 0.8)',
+                  'rgba(153, 102, 255, 0.8)',
+                  'rgba(255, 159, 64, 0.8)',
+                  'rgba(255, 99, 132, 0.3)',
+                  'rgba(54, 162, 235, 0.3)',
+                  ],
+                  borderWidth: 1
+              }]
+          },
+          options: {
+              title: {
+                  display: true,
+                  text: 'Orders per Staff',
+                  fontSize: 20,
+                  fontColor: '#000'
+              },
+              legend: {
+                  display: true
+              },
+              scales: {
+                xAxes: [{
+                   ticks: {
+                      display: false
+                   },
+                    gridLines: {
+                        display:false
+                    }
+                }],
+                yAxes: [{
+                   ticks: {
+                      display: false
+                   },
+                    gridLines: {
+                        display:false
+                    }
+                }]
+           }
+          }
+      });
+  </script>
+  <!--Bar Chart for Monthly Orders-->
+  <script>
+    var ctx = document.getElementById('Product_Chart').getContext('2d');
+    var Product_Chart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: [{% for product in monthly_order_labels %} '{{ product }}', {% endfor %}],
+            datasets: [{
+                label: 'Months',
+                data: [{% for quantity in monthly_order_quantities %} {{ quantity }}, {% endfor %}],
+                backgroundColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)',
+                'rgba(255, 99, 132, 0.5)',
+                'rgba(54, 162, 235, 0.5)',
+                'rgba(255, 206, 86, 0.5)',
+                'rgba(75, 192, 192, 0.5)',
+                'rgba(153, 102, 255, 0.5)',
+                'rgba(255, 159, 64, 0.5)',
+                'rgba(255, 99, 132, 0.75)',
+                'rgba(54, 162, 235, 0.75)',
+                'rgba(255, 206, 86, 0.75)',
+                'rgba(75, 192, 192, 0.75)',
+                'rgba(153, 102, 255, 0.75)',
+                'rgba(255, 159, 64, 0.75)',
+                'rgba(255, 99, 132, 0.25)',
+                'rgba(54, 162, 235, 0.25)',
+                'rgba(255, 206, 86, 0.25)',
+                'rgba(75, 192, 192, 0.25)',
+                'rgba(153, 102, 255, 0.25)',
+                'rgba(255, 159, 64, 0.25)',
+                'rgba(255, 99, 132, 0.9)',
+                'rgba(54, 162, 235, 0.9)',
+                'rgba(255, 206, 86, 0.9)',
+                'rgba(75, 192, 192, 0.9)',
+                'rgba(153, 102, 255, 0.9)',
+                'rgba(255, 159, 64, 0.9)',
+                'rgba(255, 99, 132, 0.1)',
+                'rgba(54, 162, 235, 0.1)',
+                'rgba(255, 206, 86, 0.1)',
+                'rgba(75, 192, 192, 0.1)',
+                'rgba(153, 102, 255, 0.1)',
+                'rgba(255, 159, 64, 0.1)',
+                'rgba(255, 99, 132, 0.8)',
+                'rgba(54, 162, 235, 0.8)',
+                'rgba(255, 206, 86, 0.8)',
+                'rgba(75, 192, 192, 0.8)',
+                'rgba(153, 102, 255, 0.8)',
+                'rgba(255, 159, 64, 0.8)',
+                'rgba(255, 99, 132, 0.3)',
+                'rgba(54, 162, 235, 0.3)',
+                ],
+                borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)',
+                'rgba(255, 99, 132, 0.5)',
+                'rgba(54, 162, 235, 0.5)',
+                'rgba(255, 206, 86, 0.5)',
+                'rgba(75, 192, 192, 0.5)',
+                'rgba(153, 102, 255, 0.5)',
+                'rgba(255, 159, 64, 0.5)',
+                'rgba(255, 99, 132, 0.75)',
+                'rgba(54, 162, 235, 0.75)',
+                'rgba(255, 206, 86, 0.75)',
+                'rgba(75, 192, 192, 0.75)',
+                'rgba(153, 102, 255, 0.75)',
+                'rgba(255, 159, 64, 0.75)',
+                'rgba(255, 99, 132, 0.25)',
+                'rgba(54, 162, 235, 0.25)',
+                'rgba(255, 206, 86, 0.25)',
+                'rgba(75, 192, 192, 0.25)',
+                'rgba(153, 102, 255, 0.25)',
+                'rgba(255, 159, 64, 0.25)',
+                'rgba(255, 99, 132, 0.9)',
+                'rgba(54, 162, 235, 0.9)',
+                'rgba(255, 206, 86, 0.9)',
+                'rgba(75, 192, 192, 0.9)',
+                'rgba(153, 102, 255, 0.9)',
+                'rgba(255, 159, 64, 0.9)',
+                'rgba(255, 99, 132, 0.1)',
+                'rgba(54, 162, 235, 0.1)',
+                'rgba(255, 206, 86, 0.1)',
+                'rgba(75, 192, 192, 0.1)',
+                'rgba(153, 102, 255, 0.1)',
+                'rgba(255, 159, 64, 0.1)',
+                'rgba(255, 99, 132, 0.8)',
+                'rgba(54, 162, 235, 0.8)',
+                'rgba(255, 206, 86, 0.8)',
+                'rgba(75, 192, 192, 0.8)',
+                'rgba(153, 102, 255, 0.8)',
+                'rgba(255, 159, 64, 0.8)',
+                'rgba(255, 99, 132, 0.3)',
+                'rgba(54, 162, 235, 0.3)',
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+          title: {
+              display: true,
+              text: 'Monthly Total Orders',
+              fontSize: 20,
+              fontColor: '#000'
+          },
+          legend: {
+              display: true
+          },
+          scales: {
+            xAxes: [{
+               ticks: {
+                  display: true
+               },
+                gridLines: {
+                    display:false
+                }
+            }],
+            yAxes: [{
+               ticks: {
+                  display: true
+               },
+                gridLines: {
+                    display:false
+                }
+            }]
+       }
+        }
+    });
+</script>
+<!--Category Products-->
+<script>
+  var ctx = document.getElementById('Category_Chart').getContext('2d');
+  var Category_Chart = new Chart(ctx, {
+      type: 'doughnut',
+      data: {
+          labels: [{% for order in category_labels %} '{{order}}',{% endfor %}],
+          datasets: [{
+              label: 'Categories',
+              data: [{% for order in category_quantities %} {{order}},{% endfor %}],
+              backgroundColor: [
+              'rgba(255, 99, 132, 1)',
+              'rgba(54, 162, 235, 1)',
+              'rgba(255, 206, 86, 1)',
+              'rgba(75, 192, 192, 1)',
+              'rgba(153, 102, 255, 1)',
+              'rgba(255, 159, 64, 1)',
+              'rgba(255, 99, 132, 0.5)',
+              'rgba(54, 162, 235, 0.5)',
+              'rgba(255, 206, 86, 0.5)',
+              'rgba(75, 192, 192, 0.5)',
+              'rgba(153, 102, 255, 0.5)',
+              'rgba(255, 159, 64, 0.5)',
+              'rgba(255, 99, 132, 0.75)',
+              'rgba(54, 162, 235, 0.75)',
+              'rgba(255, 206, 86, 0.75)',
+              'rgba(75, 192, 192, 0.75)',
+              'rgba(153, 102, 255, 0.75)',
+              'rgba(255, 159, 64, 0.75)',
+              'rgba(255, 99, 132, 0.25)',
+              'rgba(54, 162, 235, 0.25)',
+              'rgba(255, 206, 86, 0.25)',
+              'rgba(75, 192, 192, 0.25)',
+              'rgba(153, 102, 255, 0.25)',
+              'rgba(255, 159, 64, 0.25)',
+              'rgba(255, 99, 132, 0.9)',
+              'rgba(54, 162, 235, 0.9)',
+              'rgba(255, 206, 86, 0.9)',
+              'rgba(75, 192, 192, 0.9)',
+              'rgba(153, 102, 255, 0.9)',
+              'rgba(255, 159, 64, 0.9)',
+              'rgba(255, 99, 132, 0.1)',
+              'rgba(54, 162, 235, 0.1)',
+              'rgba(255, 206, 86, 0.1)',
+              'rgba(75, 192, 192, 0.1)',
+              'rgba(153, 102, 255, 0.1)',
+              'rgba(255, 159, 64, 0.1)',
+              'rgba(255, 99, 132, 0.8)',
+              'rgba(54, 162, 235, 0.8)',
+              'rgba(255, 206, 86, 0.8)',
+              'rgba(75, 192, 192, 0.8)',
+              'rgba(153, 102, 255, 0.8)',
+              'rgba(255, 159, 64, 0.8)',
+              'rgba(255, 99, 132, 0.3)',
+              'rgba(54, 162, 235, 0.3)',
+              ],
+              borderColor: [
+              'rgba(255, 99, 132, 1)',
+              'rgba(54, 162, 235, 1)',
+              'rgba(255, 206, 86, 1)',
+              'rgba(75, 192, 192, 1)',
+              'rgba(153, 102, 255, 1)',
+              'rgba(255, 159, 64, 1)',
+              'rgba(255, 99, 132, 0.5)',
+              'rgba(54, 162, 235, 0.5)',
+              'rgba(255, 206, 86, 0.5)',
+              'rgba(75, 192, 192, 0.5)',
+              'rgba(153, 102, 255, 0.5)',
+              'rgba(255, 159, 64, 0.5)',
+              'rgba(255, 99, 132, 0.75)',
+              'rgba(54, 162, 235, 0.75)',
+              'rgba(255, 206, 86, 0.75)',
+              'rgba(75, 192, 192, 0.75)',
+              'rgba(153, 102, 255, 0.75)',
+              'rgba(255, 159, 64, 0.75)',
+              'rgba(255, 99, 132, 0.25)',
+              'rgba(54, 162, 235, 0.25)',
+              'rgba(255, 206, 86, 0.25)',
+              'rgba(75, 192, 192, 0.25)',
+              'rgba(153, 102, 255, 0.25)',
+              'rgba(255, 159, 64, 0.25)',
+              'rgba(255, 99, 132, 0.9)',
+              'rgba(54, 162, 235, 0.9)',
+              'rgba(255, 206, 86, 0.9)',
+              'rgba(75, 192, 192, 0.9)',
+              'rgba(153, 102, 255, 0.9)',
+              'rgba(255, 159, 64, 0.9)',
+              'rgba(255, 99, 132, 0.1)',
+              'rgba(54, 162, 235, 0.1)',
+              'rgba(255, 206, 86, 0.1)',
+              'rgba(75, 192, 192, 0.1)',
+              'rgba(153, 102, 255, 0.1)',
+              'rgba(255, 159, 64, 0.1)',
+              'rgba(255, 99, 132, 0.8)',
+              'rgba(54, 162, 235, 0.8)',
+              'rgba(255, 206, 86, 0.8)',
+              'rgba(75, 192, 192, 0.8)',
+              'rgba(153, 102, 255, 0.8)',
+              'rgba(255, 159, 64, 0.8)',
+              'rgba(255, 99, 132, 0.3)',
+              'rgba(54, 162, 235, 0.3)',
+              ],
+              borderWidth: 1
+          }]
+      },
+      options: {
+          title: {
+              display: true,
+              text: 'Products per Categories',
+              fontSize: 20,
+              fontColor: '#000'
+          },
+          legend: {
+              display: false
+          },
+          scales: {
+            xAxes: [{
+               ticks: {
+                  display: false
+               },
+                gridLines: {
+                    display:false
+                }
+            }],
+            yAxes: [{
+               ticks: {
+                  display: false
+               },
+                gridLines: {
+                    display:false
+                }
+            }]
+       }
+      }
+  });
+</script>
+  <!--Revenue_Chart-->
+<script>
+    var ctx = document.getElementById('Revenue_Chart').getContext('2d');
+    var Revenue_Chart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: [{% for product in monthly_revenue_labels %} '{{ product }}', {% endfor %}],
+            datasets: [{
+                label: 'Months',
+                data: [{% for quantity in monthly_revenue_quantities %} {{ quantity }}, {% endfor %}],
+                backgroundColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)',
+                'rgba(255, 99, 132, 0.5)',
+                'rgba(54, 162, 235, 0.5)',
+                'rgba(255, 206, 86, 0.5)',
+                'rgba(75, 192, 192, 0.5)',
+                'rgba(153, 102, 255, 0.5)',
+                'rgba(255, 159, 64, 0.5)',
+                'rgba(255, 99, 132, 0.75)',
+                'rgba(54, 162, 235, 0.75)',
+                'rgba(255, 206, 86, 0.75)',
+                'rgba(75, 192, 192, 0.75)',
+                'rgba(153, 102, 255, 0.75)',
+                'rgba(255, 159, 64, 0.75)',
+                'rgba(255, 99, 132, 0.25)',
+                'rgba(54, 162, 235, 0.25)',
+                'rgba(255, 206, 86, 0.25)',
+                'rgba(75, 192, 192, 0.25)',
+                'rgba(153, 102, 255, 0.25)',
+                'rgba(255, 159, 64, 0.25)',
+                'rgba(255, 99, 132, 0.9)',
+                'rgba(54, 162, 235, 0.9)',
+                'rgba(255, 206, 86, 0.9)',
+                'rgba(75, 192, 192, 0.9)',
+                'rgba(153, 102, 255, 0.9)',
+                'rgba(255, 159, 64, 0.9)',
+                'rgba(255, 99, 132, 0.1)',
+                'rgba(54, 162, 235, 0.1)',
+                'rgba(255, 206, 86, 0.1)',
+                'rgba(75, 192, 192, 0.1)',
+                'rgba(153, 102, 255, 0.1)',
+                'rgba(255, 159, 64, 0.1)',
+                'rgba(255, 99, 132, 0.8)',
+                'rgba(54, 162, 235, 0.8)',
+                'rgba(255, 206, 86, 0.8)',
+                'rgba(75, 192, 192, 0.8)',
+                'rgba(153, 102, 255, 0.8)',
+                'rgba(255, 159, 64, 0.8)',
+                'rgba(255, 99, 132, 0.3)',
+                'rgba(54, 162, 235, 0.3)',
+                ],
+                borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)',
+                'rgba(255, 99, 132, 0.5)',
+                'rgba(54, 162, 235, 0.5)',
+                'rgba(255, 206, 86, 0.5)',
+                'rgba(75, 192, 192, 0.5)',
+                'rgba(153, 102, 255, 0.5)',
+                'rgba(255, 159, 64, 0.5)',
+                'rgba(255, 99, 132, 0.75)',
+                'rgba(54, 162, 235, 0.75)',
+                'rgba(255, 206, 86, 0.75)',
+                'rgba(75, 192, 192, 0.75)',
+                'rgba(153, 102, 255, 0.75)',
+                'rgba(255, 159, 64, 0.75)',
+                'rgba(255, 99, 132, 0.25)',
+                'rgba(54, 162, 235, 0.25)',
+                'rgba(255, 206, 86, 0.25)',
+                'rgba(75, 192, 192, 0.25)',
+                'rgba(153, 102, 255, 0.25)',
+                'rgba(255, 159, 64, 0.25)',
+                'rgba(255, 99, 132, 0.9)',
+                'rgba(54, 162, 235, 0.9)',
+                'rgba(255, 206, 86, 0.9)',
+                'rgba(75, 192, 192, 0.9)',
+                'rgba(153, 102, 255, 0.9)',
+                'rgba(255, 159, 64, 0.9)',
+                'rgba(255, 99, 132, 0.1)',
+                'rgba(54, 162, 235, 0.1)',
+                'rgba(255, 206, 86, 0.1)',
+                'rgba(75, 192, 192, 0.1)',
+                'rgba(153, 102, 255, 0.1)',
+                'rgba(255, 159, 64, 0.1)',
+                'rgba(255, 99, 132, 0.8)',
+                'rgba(54, 162, 235, 0.8)',
+                'rgba(255, 206, 86, 0.8)',
+                'rgba(75, 192, 192, 0.8)',
+                'rgba(153, 102, 255, 0.8)',
+                'rgba(255, 159, 64, 0.8)',
+                'rgba(255, 99, 132, 0.3)',
+                'rgba(54, 162, 235, 0.3)',
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+          title: {
+              display: true,
+              text: 'Monthly Revenue',
+              fontSize: 20,
+              fontColor: '#000'
+          },
+          legend: {
+              display: true
+          },
+          scales: {
+            xAxes: [{
+               ticks: {
+                  display: true
+               },
+                gridLines: {
+                    display:false
+                }
+            }],
+            yAxes: [{
+               ticks: {
+                  display: true
+               },
+                gridLines: {
+                    display:false
+                }
+            }]
+       }
+        }
+    });
+</script>
+</body>
+
 </html>

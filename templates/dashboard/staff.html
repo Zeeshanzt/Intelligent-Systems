@@ -1,34 +1,28 @@
 {% extends 'partials/base.html' %} 
 {% block title %} Staff {% endblock title %}
+{% block dashboard-title %} Staff {% endblock dashboard-title %}
 {% block content %}
-{% include 'partials/topnav.html' %} 
-<div class="container">
-  <div class="row my-4">
-    <div class="col-md-4"></div>
-    <div class="col-md-8">
-      <table class="table bg-white">
-        <thead class="bg-info">
-          <tr class="text-white">
-            <th scope="col">#</th>
-            <th scope="col">Name</th>
-            <th scope="col">Email</th>
-            <th scope="col">Phone</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for worker in workers  %}
-          <tr>
-            <th scope="row"><a class="btn btn-info btn-sm" href="{% url 'dashboard-staff-update' worker.id %}">View</a></th>
-            <td>{{worker.username}}</td>
-            <td>{{worker.email}}</td>
-            <td>{{worker.profile.phone}}</td>
-          </tr>
-          {% endfor %}
-          
-          
-        </tbody>
-      </table>
+<div class="container-profile">
+  {% for worker in workers  %}
+  <div class="box">
+    <div class="image">
+    <img class="img-thumbnail" src= {{worker.profile.image.url}} alt="Profile Picture">
+    </div>
+    <div class="name_job">{{worker.username}}</div>
+    <div class="rating">
+      <i class="fas fa-star"></i>
+      <i class="fas fa-star"></i>
+      <i class="far fa-star"></i>
+      <i class="far fa-star"></i>
+      <i class="far fa-star"></i>
+    </div>
+    <p> {{worker.profile.phone}}</p>
+    <p> {{worker.email}}</p>
+    <div class="buttons">
+      <a class = 'btn' href="{% url 'dashboard-staff-update' worker.id %}">View</a>
     </div>
   </div>
-</div>
+  {% endfor %}
+
+
 {% endblock content %}

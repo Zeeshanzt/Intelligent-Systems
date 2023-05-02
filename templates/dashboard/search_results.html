@@ -1,0 +1,94 @@
+{% extends 'partials/base.html' %}
+{% block title %} Search {% endblock title %}
+{% block dashboard-title %} Search {% endblock dashboard-title %}
+{% block content %}
+{% if searched %}
+<div class="sales-boxes">
+    <div class="recent-sales box">
+      <div class="title">Showing Products for {{searched}}</div>
+      <hr>
+      <div class="sales-details">
+        <ul class="details">
+            <li class="topic">ID</li>            
+         {% for product in products %}
+         <li>{{product.id}}</li>
+         {% endfor %}
+        </ul>
+        <ul class="details">
+          <li class="topic">Product</li>
+         {% for product in products %}        
+            <li>{{product.name}}</li>
+          {% endfor %}
+        </ul>
+        <ul class="details">
+          <li class="topic">Quantity</li>
+         {% for product in products %}     
+            <li>{{product.quantity}}</li>
+          {% endfor %}
+        </ul>
+        
+        <ul class="details">
+          <li class="topic">Price</li>
+         {% for product in products %}
+            <li>{{product.product_price}}</li>
+  
+          {% endfor %}
+        </ul>
+        <ul class="details">
+          <li class="topic">Activity</li>
+          
+         {% for product in products %}
+                 
+            <div class="btns-product">
+              <a href="{% url 'dashboard-product-update' product.id %}">Edit</a>
+              <a href="{% url 'dashboard-product-delete' product.id %}">Delete</a>
+            </div>
+  
+          {% endfor %}
+        </ul>
+      </div>
+      <hr>
+      <div class="title">Showing Orders for {{searched}}</div>
+      <hr>
+      <div class="sales-details">
+        <ul class="details">
+            <li class="topic">#</li>            
+         {% for order in orders %}
+         <li>{{forloop.counter}}</li>
+         {% endfor %}
+        </ul>
+        <ul class="details">
+          <li class="topic">Product</li>
+         {% for order in orders %}        
+            <li>{{order.product.name}}</li>
+          {% endfor %}
+        </ul>
+        <ul class="details">
+          <li class="topic">Quantity</li>
+         {% for order in orders %}     
+            <li>{{order.quantity}}</li>
+          {% endfor %}
+        </ul>
+        <ul class="details">
+          <li class="topic">Date</li>
+         {% for order in orders %}     
+            <li>{{order.date}}</li>
+          {% endfor %}
+        </ul>
+        <ul class="details">
+          <li class="topic">Order By</li>
+         {% for order in orders %}     
+            <li>{{order.staff.username}}</li>
+          {% endfor %}
+        </ul>
+        
+
+
+      </div>
+    </div>
+</div>
+{% else %}
+<center><h1>Please enter a search query.</h1></center>
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends 'partials/base.html' %}
+{% block title %} Analytics {% endblock title %}  
+{% block dashboard-title %} Analytics {% endblock dashboard-title %}  
+
+{% block content %}
+<div class="sales-boxes">
+    <div class="recent-sales box">
+      
+      <div class="sales-details">
+        <canvas id="Product_Chart" width="400" height="300"></canvas>
+      </div>
+      <div class="sales-details">
+        <canvas id="Revenue_Chart" width="400" height="300"></canvas>
+      </div>
+           
+      
+    </div>
+      <div class="top-sales box">        
+        <div class="sales-details">
+          <canvas id="Order_Chart" width="400" height="600"></canvas>
+        </div>
+        <div class="sales-details">
+          <canvas id="Category_Chart" width="400" height="600"></canvas>
+        </div>
+        
+      
+      </div>
+    </div>
+
+
+
+{% endblock content %}

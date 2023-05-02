@@ -1,55 +1,31 @@
 {% extends 'partials/base.html' %} 
 {% block title %} Staff {% endblock title %}
 {% block content %}
-{% include 'partials/topnav.html' %} 
 
-<div class="container">
-    <div class="row my-4">
-        <div class="col-md-4">
-
+<section class="main">
+    <div class="profile-card">
+      <div class="image">
+        <img src= {{worker.profile.image.url}} alt="Profile Picture" class="profile-pic">
+      </div>
+      <div class="data">
+        <h2>{{worker.username}}</h2>
+        <span>{{worker.email}}</span>
+      </div>
+      <div class="row">
+        <div class="info">
+          <h3>Phone</h3>
+          <span>{{worker.profile.phone}}</span>
         </div>
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header bg-info text-white">
-                    Profile Page
-                </div>
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-8">
-                            <span class="h4"> Profile Information</span>
-                            <hr>
-                            <table class="table bg-white table-borderless">
-                                <tbody>
-                                    <tr>
-                                        <th scope="row">Name</th>
-                                        <td>{{worker.username}}</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">Email</th>
-                                        <td>{{worker.email}}</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">Phone</th>
-                                        <td>{{worker.profile.phone}}</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">Address</th>
-                                        <td>{{worker.profile.address}}</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-
-                        </div>
-                        <div class="col-md-4">
-                            <img class="img-profile" src= {{worker.profile.image.url}} alt="Profile Picture" style = "height:200px;width:200px">
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div class="info">
+          <h3>Address</h3>
+          <span>{{worker.profile.address}}</span>
         </div>
-
+      </div>
+      <div class="buttons">
+        <a href="{% url 'dashboard-staff' %}" class="btn"> Back to Staff</a>
+      </div>
     </div>
+  </section>
 
-</div>
 
 {% endblock %}

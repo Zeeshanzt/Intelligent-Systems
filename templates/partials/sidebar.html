@@ -1,0 +1,63 @@
+{% if user.is_authenticated and user.is_staff and user.is_superuser %}
+
+{% load static %}
+<!-- writing the code for sidebar for the inventory management dashboard -->
+<!-- partial:partials/_sidebar.html -->
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <div class="logo-details">  
+        <i class='bx bxl-c-plus-plus'></i>
+        <span class="logo_name">StockCopter</span>
+      </div>
+      <ul class="nav-links">
+        <li>
+          <a href="{% url 'dashboard-home' %}">
+            <i class='bx bx-grid-alt'></i>
+            <span class="links_name">Dashboard</span>
+          </a>
+        </li>
+        <li>
+          <a href="{% url 'dashboard-product' %}">
+            <i class='bx bx-box'></i>
+            <span class="links_name">Product</span>
+          </a>
+        </li>
+        <li>
+          <a href="{% url 'dashboard-order' %}">
+            <i class='bx bx-list-ul'></i>
+            <span class="links_name">Order list</span>
+          </a>
+        </li>
+        <li>
+          <a href="{% url 'dashboard-analytics' %}">
+            <i class='bx bx-pie-chart-alt-2'></i>
+            <span class="links_name">Analytics</span>
+          </a>
+        </li>
+     
+        <li>
+          <a href="{% url 'dashboard-stock' %}">
+            <i class='bx bx-coin-stack'></i>
+            <span class="links_name">Stock</span>
+          </a>
+        </li>
+
+        <li>
+          <a href="{% url 'dashboard-staff' %}">
+            <i class='bx bx-user'></i>
+            <span class="links_name">Team</span>
+          </a>
+        </li>
+
+
+        <li class="log_out">
+          <a href="{% url 'user-logout' %}">
+            <i class='bx bx-log-out'></i>
+            <span class="links_name">Log out</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <!-- End Sidebar -->
+<!-- partial -->
+{% endif %}

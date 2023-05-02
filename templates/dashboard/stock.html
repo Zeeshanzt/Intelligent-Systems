@@ -11,30 +11,27 @@
       <ul class="details">
           <li class="topic">ID</li>
           {% for item in items %}
-            {% if forloop.counter <= 20 %}
+            
           {% if item.is_available == True %}
           <li>{{item.id}}</li>
-          {% endif %}
           {% endif %}
         {% endfor %}
       </ul>
       <ul class="details">
         <li class="topic">Product</li>
         {% for item in items %}
-        {% if forloop.counter <= 20 %}
+        
           {% if item.is_available == True %}
           <li>{{item.name}}</li>
-          {% endif %}
           {% endif %}
         {% endfor %}
       </ul>
       <ul class="details">
         <li class="topic">Quantity</li>
         {% for item in items %}
-        {% if forloop.counter <= 20 %}
+        
           {% if item.is_available == True %}
           <li>{{item.quantity}}</li>
-          {% endif %}
           {% endif %}
         {% endfor %}
       </ul>
@@ -42,10 +39,9 @@
       <ul class="details">
         <li class="topic">Price</li>
         {% for item in items %}
-        {% if forloop.counter <= 20 %}
+        
           {% if item.is_available == True %}
           <li>{{item.product_price}}</li>
-          {% endif %}
           {% endif %}
 
         {% endfor %}
@@ -53,7 +49,7 @@
       <ul class="details">
         <li class="topic">Activity</li>
         {% for item in items %}
-        {% if forloop.counter <= 20 %}
+        
           {% if item.is_available == True %}
           <div class="btns-product">
             <a href="{% url 'dashboard-product-update' item.id %}">Edit</a>
@@ -61,13 +57,68 @@
           </div>
 
           {% endif %}
-          {% endif %}
         {% endfor %}
       </ul>
     </div>
-    <div class="button">
-      <a href="{% url 'dashboard-stock' %}">See All</a>
-    </div>
+
+<hr>
+
+    <!--Product Delivered-->
+      <div class="title">Products Delivered</div>
+      <div class="sales-details">
+        <ul class="details">
+            <li class="topic">ID</li>
+            {% for item in items %}
+              
+            {% if item.is_available == False %}
+            <li>{{item.id}}</li>
+            {% endif %}
+          {% endfor %}
+        </ul>
+        <ul class="details">
+          <li class="topic">Product</li>
+          {% for item in items %}
+          
+            {% if item.is_available == False %}
+            <li>{{item.name}}</li>
+            {% endif %}
+          {% endfor %}
+        </ul>
+        <ul class="details">
+          <li class="topic">Quantity</li>
+          {% for item in items %}
+          
+            {% if item.is_available == False %}
+            <li>{{item.quantity}}</li>
+            {% endif %}
+          {% endfor %}
+        </ul>
+        
+        <ul class="details">
+          <li class="topic">Price</li>
+          {% for item in items %}
+          
+            {% if item.is_available == False %}
+            <li>{{item.product_price}}</li>
+            {% endif %}
+  
+          {% endfor %}
+        </ul>
+        <ul class="details">
+          <li class="topic">Activity</li>
+          {% for item in items %}
+          
+            {% if item.is_available == False %}
+            <div class="btns-product">
+              <a href="{% url 'dashboard-product-update' item.id %}">Edit</a>
+              <a href="{% url 'dashboard-product-delete' item.id %}">Delete</a>
+            </div>
+  
+            {% endif %}
+          {% endfor %}
+        </ul>
+      </div>
+
   </div>
       <div class="top-sales box">
       <div class="title">Add Product</div>
@@ -89,6 +140,8 @@
       </div>
     </div>
   </div>
+
+  
 
 
 <!--End Table-->

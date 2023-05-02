@@ -5,7 +5,7 @@ class ProductForm(forms.ModelForm):
     
     class Meta:
         model = Product
-        fields = ['name', 'category','quantity','product_id','expiration_date','manufacturer_name','product_price']
+        fields = ['name', 'category','quantity','product_id','expiration_date','manufacturer_name','product_price', 'is_available']
 
 class OrderForm(forms.ModelForm):
     

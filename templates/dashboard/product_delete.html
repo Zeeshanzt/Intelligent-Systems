@@ -2,7 +2,26 @@
 {% block title %} Delete Product {% endblock title %}
 {% load crispy_forms_tags %}
 {% block content %}
-
+<div class="alert-container">
+    <div class="background"></div>
+    <div class="alert_box">
+      <div class="icon">
+        <i class="fas fa-exclamation"></i>
+      </div>
+      <header>Confirm</header>
+      <p>Are you sure want to permanently delete this Photo?</p>
+      <form method = "POST">
+        {% csrf_token %}
+        {{form}}
+        <div class="buttons">
+          <a href=" {% url 'dashboard-product' %}">Cancel</a>
+          <input type="submit" value= 'Confirm'>
+        </div>
+    </form>
+      
+    </div>
+  </div>
+  
 <div class="container">
     <div class="row mt-5">
         <div class="col-md-6 offset-md-3">

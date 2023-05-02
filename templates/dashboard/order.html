@@ -1,50 +1,57 @@
 {% extends 'partials/base.html' %}
 {% block title %} Orders {% endblock title %}
+{% block dashboard-title %} Orders {% endblock dashboard-title %}
 
 {% block content %} 
-{% include 'partials/topnav.html' %} 
- <!--Table-->
- <div class="container">
-    <div class="row my-4">
-        <div class="col-md-4">
 
-        </div>
-        <div class="col-md-8">
-            <table class="table bg-white">
-                <thead class="bg-info">
-                    <tr class="text-white">
-                        <th scope="col">#</th>
-                        <th scope="col">Product</th>
-                        <th scope="col">Category</th>
-                        <th scope="col">Quantity</th>
-                        <th scope="col">Order by</th>
-                        <th scope="col">Date</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for order in orders %}
-                    <tr>
-                        <th scope="row">{{forloop.counter}}</th>
-                        <td>{{order.product.name}}</td>
-                        <td>{{order.product.category}}</td>
-                        <td>{{order.quantity}}</td>
-                        <td>
-                            {{order.staff.username}}
-                        </td>
-                        <td>
-                            {{order.date}}
-                        </td>
-                    </tr>
-                    {% endfor %}
-                   
-                </tbody>
-            </table>
-        </div>
+<div class="sales-boxes">
+    <div class="recent-sales box">
+      <div class="title">Orders Remaining</div>
+      <div class="sales-details">
+        <ul class="details">
+            <li class="topic">#</li>
+            {% for order in orders %}
+            
+            <li>{{forloop.counter }}</li>
+            
+          {% endfor %}
+        </ul>
+        <ul class="details">
+          <li class="topic">Product</li>
+          {% for order in orders %}
+            
+            <li>{{order.product.name}}</li>
+            
+          {% endfor %}
+        </ul>
+        <ul class="details">
+          <li class="topic">Quantity</li>
+          {% for order in orders %}
+            
+            <li>{{order.quantity}}</li>
+            
+          {% endfor %}
+        </ul>
+        <ul class="details">
+          <li class="topic">Date</li>
+          {% for order in orders %}
+            
+            <li>{{order.date}}</li>
+            
+          {% endfor %}
+        </ul>
+        <ul class="details">
+          <li class="topic">Order By</li>
+          {% for order in orders %}
+            
+            <li>{{order.staff.username}}</li>
+            
+          {% endfor %}
+        </ul>
+      </div>
     </div>
 
-</div>
-
-
+x
 
 
 
