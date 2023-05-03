@@ -17,8 +17,8 @@
 
   <body>
     {% include 'partials/sidebar.html' %}
-  <section class="home-section">
     {% if user.is_authenticated and user.is_staff and user.is_superuser %}
+  <section class="home-section">
     <nav>
       <div class="sidebar-button">
         <i class='bx bx-menu sidebarBtn'></i>
@@ -608,6 +608,8 @@
         }
     });
 </script>
+<script src="https://example.com/fontawesome/v6.4.0/js/all.js" data-auto-replace-svg="nest"></script>
+
 </body>
 
 </html>

@@ -1,21 +1,56 @@
 {% extends 'partials/base.html' %}
-{% block title %} Register {% endblock title %} 
+{% load static %}
+{% block title %} Log In {% endblock title %} 
 {% load crispy_forms_tags %}
 {% block content %} 
-<div class="container">
-    <div class="row mt-5 ">
-        <div class="col-md-6 offset-md-3">
-            <div class="border bg-white p-3">
-                <h3>Register</h3>
-                <form method="POST">
-                    {% csrf_token %}
-                    {{form|crispy}}
-                    <input type="submit" class="btn btn-success" value = "Register">
- 
-                </form>
+
+<!DOCTYPE html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!--<title>Website with Login & Registration Form</title>-->
+    <link rel="stylesheet" href=" {% static 'style.css' %}" />
+    <!-- Unicons -->
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css" />
+  </head>
+  <body>
+    <!-- Header -->
+    <header class="header">
+      <nav class="nav-login">
+        <a href="#" class="nav_logo">Stock Copter</a>
+
+        <a href = '{% url 'user-login' %}'><button class="button">Login</button></a>
+      </nav>
+    </header>
+
+    <!-- Home -->
+    <section class="home">
+        <div class="form-signin">
+            <div class="container-signin">
+                <div class="forms-signin">
+                    <div class="form login">
+                        
+                        <span class="title">Register</span>
+                            <div class="border bg-white p-4">
+                                <form method="POST">
+                                    {% csrf_token %}
+                                    {{form|crispy}}
+                                    <div class='buttons'>
+                                        <input type="submit" class="btn btn-success" value = "Register">
+
+                                    </div>
+                 
+                                </form>
+                                    
+                                           
             </div>
-        </div>
-    </div>
-</div>
+            </div>
+        <!-- Login From -->
+ 
 
 {% endblock content %} 
+
+
+
+

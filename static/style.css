@@ -470,18 +470,18 @@ nav .profile-details i{
   transition: all 0.3s ease;
 }
 .alert_box{
-  position: relative;
+  position: absolute;
   top: 50%;
   left: 50%;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
-  padding: 30px;
+  padding: 50px;
   display: flex;
   background: #fff;
   flex-direction: column;
   align-items: center;
   text-align: center;
   max-width: 450px;
-  width: 100%;
+  width: 80%;
   border-radius: 5px;
   z-index: 5;
   opacity: 01;
@@ -499,9 +499,8 @@ nav .profile-details i{
   max-height: 100vh;
   pointer-events: auto;
 }
-#check{
-  display: none;
-}
+
+
 .alert_box .icon{
   height: 100px;
   width: 100px;
@@ -766,6 +765,7 @@ color: #17c0eb
     justify-content: center;
 }
 
+
 .container .forms{
   display: flex;
   align-items: center;
@@ -781,6 +781,7 @@ color: #17c0eb
   transition: height 0.2s ease;
 }
 
+
 .container-product .form{
   width: 85%;
   padding: 20px;
@@ -795,6 +796,71 @@ color: #17c0eb
   position: relative;
   font-size: 27px;
   font-weight: 600;
+}
+.form-login{
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+}
+.container-login .forms{
+  display: flex;
+  align-items: center;
+  height: 400px;
+  width: 100%;
+  transition: height 0.2s ease;
+  padding: auto;
+
+
+}
+.container-login .form{
+  width: 100%;
+  padding: 20px;
+  background: #fff;
+  padding: 20px 20px;
+  margin: 0 20px;
+  border-radius: 12px;
+  box-shadow: 0 5px 10px rgba(255, 255, 255, 0.1);
+  transition: margin-left 0.18s ease;
+}
+.container-login .form .title{
+  position: relative;
+  font-size: 30px;
+  font-weight: 600;
+}
+.form-signin{
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+}
+.container-signin .form{
+  width: 80%;
+  padding: 30px;
+  background: #fff;
+  padding: 20px 30px;
+  margin: 0 20px;
+  border-radius: 12px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+  transition: margin-left 0.18s ease;
+}
+.container-signin .form .title{
+  position: relative;
+  font-size: 30px;
+  font-weight: 600;
+}
+/* Style form inputs */
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+  
+  width: 100%;
+  padding: 0.5rem;
+  line-height: 1.5;
+  border: 1px solid #ccc;
+  border-radius: 0.25rem;
 }
 
 .container .form{
@@ -1061,4 +1127,130 @@ hr{
   height: 2px;
   background-color: #0A2558;
   border-bottom: 1px solid #0A2558;
+}
+
+
+
+.home {
+  position: relative;
+  height: 100vh;
+  width: 100%;
+  background-image: url("/static/images/theme.jpeg");
+  background-size: cover;
+  background-position: center;
+}
+.home::before {
+  content: "";
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  z-index: 100;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.5s ease-out;
+}
+.home.show::before {
+  opacity: 1;
+  pointer-events: auto;
+}
+.header {
+  position: fixed;
+  height: 80px;
+  width: 100%;
+  z-index: 100;
+  padding: 0 20px;
+}
+
+.nav-login {
+  max-width: 1100px;
+  width: 100%;
+  margin: 0 auto;
+}
+.nav-login,
+.nav_item {
+  display: flex;
+  height: 100%;
+  align-items: center;
+  justify-content: space-between;
+}
+.nav_logo,
+.nav_link,
+.button {
+  color: #fff;
+}
+.nav_logo {
+  font-size: 25px;
+}
+.nav_item {
+  column-gap: 25px;
+}
+.nav_link:hover {
+  color: #d9d9d9;
+}
+.button {
+  padding: 6px 24px;
+  border: 2px solid #fff;
+  background: transparent;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.button:active {
+  transform: scale(0.98);
+}
+.nav-login a {
+  text-decoration: none;
+}
+
+
+.form_login_container {
+  position: fixed;
+  max-width: 320px;
+  width: 100%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(1.2);
+  z-index: 101;
+  background: #fff;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: rgba(0, 0, 0, 0.1);
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.4s ease-out;
+}
+.home.show .form_login_container {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translate(-50%, -50%) scale(1);
+}
+.form_login_container.active .login_form {
+  display: none;
+}
+.form_login_close {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  color: #0b0217;
+  font-size: 22px;
+  opacity: 0.7;
+  cursor: pointer;
+}
+.form_login_container h2 {
+  font-size: 22px;
+  color: #0b0217;
+  text-align: center;
+}
+.option_field {
+  margin-top: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.form_login_container a {
+  color: #7d2ae8;
+  font-size: 12px;
+}
+.form_login_container a:hover {
+  text-decoration: underline;
 }

@@ -1,52 +1,123 @@
+
+{% load static %}
 {% load crispy_forms_tags %}
-<div>
-    <div class="row mt-4">
-        <div class="col-md-4">
-            <div class="card">
-                <div class="card-header">
-                    Make Request
-                </div>
-                <div class="card-body">
-                    <form method="POST">
-                        {% csrf_token %}
-                        {{order_form|crispy}}
-                        <input class="btn btn-info btn-block" type="submit" value="Make Request">
-                    </form>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">
-                    Orders Records
-                </div>
-                <div class="card-body">
-                    <table class="table bg-white">
-                        <thead class="bg-info text-white">
-                            <tr>
-                                <th scope="col">Product</th>
-                                <th scope="col">Category</th>
-                                <th scope="col">Quantity</th>
-                                <th scope="col">Date</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for order in orders %}
-                            {% if order.staff == user %}
-                            <tr>
-                                <td>{{order.product.name}}</td>
-                                <td>{{order.product.category}}</td>
-                                <td>{{order.quantity}}</td>
-                                <td>{{order.date}}</td>
-                            </tr>
-                            {% endif %}
-							
-							{% endfor %}
-                            
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8">
+    <title>Staff | StockCopter</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}" />
+
+    <!-- Boxicons CDN Link -->
+    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css'
+      rel='stylesheet'>
+      
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  </head>
+
+  <body>
+    
+    <div class="sidebar">
+      <div class="logo-details">  
+        <i class='bx bxl-c-plus-plus'></i>
+        <span class="logo_name">StockCopter</span>
+      </div>
+      <ul class="nav-links">
+        
+        
+        <li class="log_out">
+          <a href="{% url 'user-logout' %}">
+            <i class='bx bx-log-out'></i>
+            <span class="links_name">Log out</span>
+          </a>
+        </li>
+      </ul>
     </div>
-</div>
+    <section class="home-section">
+        <nav>
+          <div class="sidebar-button">
+            <i class='bx bx-menu sidebarBtn'></i>
+            <span class="dashboard">
+              {% block dashboard-title %} {% endblock dashboard-title %}
+            </span>
+          </div>
+          
+          <div class="profile-details">
+            <img  src= {{user.profile.image.url}} alt="Profile Picture">
+            <span class="admin_name">{{user.username}}</span>
+          
+            <a href="{% url 'user-profile' %}"><i class='bx bx-chevron-down' > </i></a>
+         
+          </div>
+        </nav>
+        <div class="home-content">
+            <div class="sales-boxes">
+    <div class="recent-sales box">
+      <div class="title">Orders Record</div>
+      <hr>
+      <div class="sales-details">
+        <ul class="details">
+            <li class="topic">#</li>
+            {% for order in orders %}
+            {% if order.staff == user %}
+            <li>{{forloop.counter }}</li>
+            {% endif %}
+          {% endfor %}
+        </ul>
+        <ul class="details">
+          <li class="topic">Product</li>
+          {% for order in orders %}
+          {% if order.staff == user %}
+            <li>{{order.product.name}}</li>
+            {% endif %}
+            
+          {% endfor %}
+        </ul>
+        <ul class="details">
+          <li class="topic">Quantity</li>
+          {% for order in orders %}
+          {% if order.staff == user %}
+            <li>{{order.quantity}}</li>
+            {% endif %}
+            
+          {% endfor %}
+        </ul>
+        <ul class="details">
+          <li class="topic">Date</li>
+          {% for order in orders %}
+          {% if order.staff == user %}
+            <li>{{order.date}}</li>
+            {% endif %}
+            
+          {% endfor %}
+        </ul>
+        <ul class="details">
+          <li class="topic">Order By</li>
+          {% for order in orders %}
+          {% if order.staff == user %}
+            <li>{{order.staff.username}}</li>
+            {% endif %}
+            
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+    <div class="top-sales box">
+        <div class="title">Make Request</div>
+        <ul class="top-sales-details">
+          <li>
+            <form method="POST">
+                {% csrf_token %}
+                {{order_form|crispy}}
+              <div class="buttons">
+                <input type="submit" value="Make Request">
+  
+              </div>
+              
+            </form>
+          </li>     
+                 
+            
+          </ul>
+        </div>
+

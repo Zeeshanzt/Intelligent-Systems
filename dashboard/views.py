@@ -237,7 +237,7 @@ def process_qr_codes(folder_path):
                         key, value = field.split("=")
                         data[key] = value
                         
-                    print(data)
+                    
                     product, created = Product.objects.get_or_create(product_id=data.get("product_id"))
                     if created:
                         product.name = data.get("name", "")
@@ -836,6 +836,7 @@ def stock(request):
 
 @login_required    
 def product_delete(request,pk):
+    item = Product.objects.get(id = pk)
     order_count = Order.objects.all().count()
     product_count = Product.objects.all().count()
     staff_count = User.objects.all().count()
@@ -848,7 +849,8 @@ def product_delete(request,pk):
     for product in products:
         total_stock_quantity += product.quantity
     total_stock_quantity = '{:,}'.format(total_stock_quantity)
-    item = Product.objects.get(id = pk)
+    #remove the object with product_id equal to pk"""
+
     if (request.method == 'POST'):
         item.delete()
         return redirect('dashboard-product')
@@ -857,6 +859,7 @@ def product_delete(request,pk):
         'formatted_product_count':formatted_product_count,
         'formatted_staff_count':formatted_staff_count,
         'total_stock_quantity':total_stock_quantity,
+       
     }
     return render(request, 'dashboard/product_delete.html', context)
 
