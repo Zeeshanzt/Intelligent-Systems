@@ -1135,7 +1135,7 @@ hr{
   position: relative;
   height: 100vh;
   width: 100%;
-  background-image: url("/static/images/theme.jpeg");
+  background-image: url("/static/images/stock.jpeg");
   background-size: cover;
   background-position: center;
 }

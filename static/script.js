@@ -9,3 +9,12 @@ sidebarBtn.onclick = function() {
   sidebarBtn.classList.replace("bx-menu-alt-right", "bx-menu");
 }
 // Add click event listener to sidebar links
+const button = document.querySelector(".button-process");
+    button.addEventListener("click", () =>{
+      button.classList.add("active");
+      setTimeout(()=>{
+        button.classList.remove("active");
+        button.querySelector("i").classList.replace("bx-cloud-download", "bx-check-circle")
+        button.querySelector("span").innerText = "Completed";
+      },6000);
+    });
