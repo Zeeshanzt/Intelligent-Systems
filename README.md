@@ -16,7 +16,6 @@ This is a Django-based web application that provides users with a dashboard to v
 ```cd Intelligent-Systems```
 * Install the dependencies
 ```pip install -r requirements.txt```
-* Create your own sql database in settings.py
 * Run the migrations
 ```python manage.py migrate```
 * Create a Superuser
