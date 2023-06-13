@@ -5,7 +5,7 @@ This is a Django-based web application that provides users with a dashboard to v
 ## Features
 * Scanning QR and barcodes of inventory items to update the database
 * Dashboard displaying insights and analytics about inventory items
-* MySQL database for storing inventory data
+* SQL database for storing inventory data
 * User authentication and access control
 
 ## Setup
