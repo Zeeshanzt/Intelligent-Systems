@@ -19,6 +19,8 @@ This is a Django-based web application that provides users with a dashboard to v
 * Create your own sql database in settings.py
 * Run the migrations
 ```python manage.py migrate```
+* Create a Superuser
+```python manage.py createsuperuser```
 * Start the development server
 ```python manage.py runserver```
 ## Usage
